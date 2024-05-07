@@ -69,9 +69,4 @@ export const createTask = (props) => {
 }
 
 
-/**
- * 
- */
-export const addTask = {
-
-}
+export default createTask;
