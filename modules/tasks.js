@@ -1,26 +1,26 @@
 //@ts-check
 
-import { doesHtmlExist, getHtml, createUniqueId } from './helpers.js'
-import { Task } from './state.js'
+import { doesHtmlExist, getHtml, createUniqueId } from "./helpers.js";
+import { Task } from "./state.js";
 
 /**
  * @typedef {Partial<Pick<Task, 'completed' | 'due' | 'title' | 'urgency'>>} Props
  */
 
 /**
- * 
- * @param {string} id - 
+ *
+ * @param {string} id -
  */
 const addTaskToHtml = (id) => {
-  if(doesHtmlExist("task", id)) {
-    throw new Error("Task with that ID already added")
+  if (doesHtmlExist("task", id)) {
+    throw new Error("Task with that ID already added");
   }
 
-  const list = getHtml("list")
+  const list = getHtml("list");
 
-  const preview = document.createElement('li')
-  preview.className = "task"
-  preview.dataset.task = id
+  const preview = document.createElement("li");
+  preview.className = "task";
+  preview.dataset.task = id;
 
   preview.innerHTML = /* html */ `
       <label class="task__check">
@@ -39,34 +39,33 @@ const addTaskToHtml = (id) => {
         ></path>
       </svg>
       </label>
-  `
-  list.appendChild(preview)
-}
+  `;
+  list.appendChild(preview);
+};
 
 /**
- * 
- * @param {string} id 
- * @param {Props} changes 
+ *
+ * @param {string} id
+ * @param {Partial<Props>} changes
  */
 const updateHtmlTask = (id, changes) => {
-  const element = document.querySelector(`[data-task="${id}"]`)
-  const isHtmlElement = element instanceof HTMLElement
-  if(!isHtmlElement) throw new Error('')
-}
+  const element = document.querySelector(`[data-task="${id}"]`);
+  const isHtmlElement = element instanceof HTMLElement;
+  if (!isHtmlElement) throw new Error("");
+};
 
 /**
- * 
- * @param {Omit<Props, 'completed'>} props 
+ *
+ * @param {Omit<Props, 'completed'>} props
  */
 export const createTask = (props) => {
-  const id = createUniqueId()
-  addTaskToHtml(id)
+  const id = createUniqueId();
+  addTaskToHtml(id);
 
   updateHtmlTask(id, {
     completed: false,
-    ...props
-  })
-}
-
+    ...props,
+  });
+};
 
 export default createTask;
